@@ -1,0 +1,64 @@
+.options h3 mat-icon{
+    vertical-align: middle;
+}
+
+.options h3{
+    margin:5px 0px;
+    margin-right:10px;
+}
+
+.newGallery input{
+    margin-right:10px;
+}
+
+.newGallery button{
+    margin-left:20px;
+}
+
+.pictureList>h3{
+     margin-bottom:0px;
+}
+
+.grid-item{
+    margin-bottom: 3px;
+    position:relative;
+}
+
+.grid-item img{
+    width:320px;
+}
+
+.grid-item button{
+    position:absolute;
+    right:5px;
+    top:5px;
+    
+}
+
+.overlay{
+    display:flex;
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    background-color:rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay img{
+    height: 800px;
+    width: 800px;
+}
+
+.overlay div{
+    position:relative;
+}
+
+.overlay div button{
+    position:absolute;
+    display:inline-block;
+    top:5px;
+    right:5px;
+}

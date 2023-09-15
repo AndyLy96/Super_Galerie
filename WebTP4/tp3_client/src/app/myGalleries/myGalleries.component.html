@@ -1,0 +1,94 @@
+<div class="galleryPage">
+
+  <div class="row galleries">
+    <!-- Titres des la page -->
+    <div class="col-1">
+      <h1>&nbsp;Mes galeries <mat-icon>photo_library</mat-icon></h1>
+    </div>
+  </div>
+
+  <div class="row galleries">
+
+    <div class="col-1 galleryList">
+      <!-- Photos de couverture de galeries -->
+     <div *ngFor="let a of service.galeries" class="galleryThumbnail">
+      <div>{{a.name}}</div>
+      <img *ngIf="a.fileName == '' " src="/assets/images/galleryThumbnail.png" alt="{{a.name}}" (click)="delete(a.id)">
+      <img *ngIf="a.fileName != '' && a.fileName != null " [src]="'https://localhost:7171/api/Pictures/GetPhotoGalerie/' + a.id" alt="{{a.name}}" (click)="delete(a.id)">
+
+     </div>
+
+    </div>
+    <div class="col-4 pictureList">
+     
+      <!-- src="/assets/images/galleryThumbnail.png" -->
+
+      <div class="options newGallery">
+        <h3>Nouvelle galerie : </h3>
+        <input [(ngModel)]="name" type="text" name="newGalleryName" placeholder="Nom de la galerie">
+
+        <!-- Pas d'image de couverture pour le moment, n'utilisez pas cet input ! -->
+        <input #myGalPictureViewChild accept="images/*" type="file" name="newGalleryCoverPicture">
+
+        <!-- Cet input peut être relié à une variable booléenne -->
+        <input [(ngModel)]="isPublic" type="checkbox" name="newGalleryIsPublic">Publique
+
+        <button (click)="fonction()" mat-raised-button>Créer la galerie	<mat-icon>add_to_queue</mat-icon></button>
+      </div>
+      <hr>
+       <!-- Options de la galerie sélectionnée -->
+       <h3>Modifier la galerie sélectionnée : </h3>
+       <div class="options">
+        <!-- Changer la couverture (Partie 2 !!) -->
+        <div class="option">
+          <input #myGalViewChild accept="images/*" type="file" name="coverPicture"><button  mat-raised-button (click)="couverture(this.selectedGal!.id)">Changer la couverture <mat-icon>photo_library</mat-icon></button>
+        </div>
+
+        <!-- Partager la galerie -->
+        <div class="option">
+          <input [(ngModel)]="username" type="text" name="newOwnerUsername" placeholder="Nom d'utilisateur">
+          <button (click)="service.ShareGalerie(this.selectedGal?.id!, username)"  mat-raised-button color="primary">Partager la galerie <mat-icon>supervised_user_circle</mat-icon></button>
+        </div>
+
+        <!-- Changer la visibilité -->
+        <div class="option">
+          <button (click)="service.PorPGalerie(this.selectedGal?.id!, this.selectedGal!)" *ngIf="selectedGal?.isPublic" mat-raised-button>Rendre privée <mat-icon>verified_user</mat-icon></button>
+          <button (click)="service.PorPGalerie(this.selectedGal?.id!, this.selectedGal!)" *ngIf="!selectedGal?.isPublic" mat-raised-button>Rendre publique	<mat-icon>remove_red_eye</mat-icon></button>
+        </div>
+
+        <!-- Supprimer la galerie -->
+        <div class="option">
+          <button (click)="service.deleteGalerie(this.selectedGal?.id!)" mat-raised-button color="warn">Supprimer la galerie <mat-icon>delete</mat-icon></button>
+        </div>
+      </div>
+
+      <hr>
+      <!-- Photos de la galerie sélectionnée (Partie 2 !) -->
+      <h2>Photos de la galerie sélectionnée <mat-icon>photo_camera</mat-icon></h2>
+      <input #myPictureViewChild type="file" name="image" accept="images/*">
+      <button (click)="uploadPicture()">Upload Picture</button>
+
+      <div class="grid" #masongrid *ngIf="selectedGal != undefined">
+        <div #masongriditems class="grid-item" *ngFor="let a of selectedGal.photoImages">
+          <img (click)="changerSize(a.id)"alt="photo"  [src]="'https://localhost:7171/api/Pictures/GetPhoto/miniature/' + a.id" >
+          <button (click)="deletePhoto(a.id)">❌</button>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+
+</div>
+
+
+<div class="overlay" *ngIf="truefalse">
+    
+    <div>
+      <button (click)="changeValue(false)" >❌</button>
+      <img src="{{newLink}}" alt="proute" />
+    </div>
+    
+
+</div>
+
